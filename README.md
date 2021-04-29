@@ -8,7 +8,7 @@ Some Pocs are written in a UnitTest fashion so you can test them easily in each 
 Clone repo
 ```
 cd /tmp
-git clone https://intersystems-ib/iris-eap-pypoc
+git clone https://github.com/intersystems-ib/iris-eap-pypoc
 cd iris-eap-pypoc
 ```
 Load source code into IRIS.
@@ -19,7 +19,7 @@ sh loader.sh
 # Run
 1. Set `^UnitTest` global to the source directory
 ```
-set ^UnitTestRoot = "/tmp/iris-eap-pypoc/UnitTest"
+set ^UnitTestRoot = "/tmp/iris-eap-pypoc/src/PyPoc/UnitTest"
 ```
 
 2. Run all tests:

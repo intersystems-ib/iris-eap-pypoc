@@ -10,9 +10,10 @@ Method OnBeforeAllTests() As %Status
     set ret = $$$OK
     try {
         // import Python modules
-        set ..jsonschema = ##class(%SYS.Python).Import("jsonschema")
-        set ..json = ##class(%SYS.Python).Import("json")
-
+        $$$ThrowOnError(##class(PyPoc.UnitTest.Helper).ImportOrInstall("json", .json))
+        $$$ThrowOnError(##class(PyPoc.UnitTest.Helper).ImportOrInstall("jsonschema", .jsonschema))
+        set ..json = json
+        set ..jsonschema = jsonschema
     } catch ex {
         set ret = ex.AsStatus()
     } 
