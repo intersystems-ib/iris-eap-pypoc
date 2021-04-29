@@ -33,7 +33,7 @@ do ##class(%UnitTest.Manager).RunTest("", "/noload/norecursive/nodelete")
 ```
 
 # PyPocs
-## jsonschema
+## jsonschema
 * Validate json using [JSON Schema](https://json-schema.org/).
 * See https://github.com/Julian/jsonschema
 * [ProdLog 161649](http://live.prodlog.iscinternal.com/prodlog/main.csp#item=161649) asked for JSON Schema support.
