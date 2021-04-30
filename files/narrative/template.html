@@ -1,0 +1,19 @@
+<div>
+    <h1>{{ resourceType }}</h1>
+
+    <h2>Identifiers</h2>
+    <ul>
+        {% for id in identifier -%}
+            {% if id.type is defined -%}
+                <li>{{ id.type.text }}: {{ id.value }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <h2>Name</h2>
+    <ul>
+        {% for iname in name -%}
+            <li>{{ iname.family }} ({% for igiven in iname.given-%} {{ igiven }} {% endfor %})</li>
+        {% endfor %}
+    </ul>
+</div>

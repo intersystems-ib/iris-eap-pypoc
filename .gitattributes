@@ -2,4 +2,6 @@
 *.cls text eol=lf
 *.mac text eol=lf
 *.int text eol=lf
+*.html text eol=lf
+*.json text eol=lf
 Dockerfil* text eol=lf
