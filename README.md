@@ -33,13 +33,16 @@ do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.jsonschema", "/noload/nor
 ```
 
 # PyPocs
-## jsonschema
+## jsonschema 
 Validate json using [JSON Schema](https://json-schema.org/).
+
 [ProdLog 161649](http://live.prodlog.iscinternal.com/prodlog/main.csp#item=161649) asked for JSON Schema support.
 
 Use cases:
  * Validate JSON data received before processing.
- * Validate JSON data before sending it to a external API.  
+ * Validate JSON data before sending it to a external API.
+
+Look at the [code 📝](src/PyPoc/UnitTest/jsonschema.cls)
 
 ## FHIR narrative (templates)
 Use a [jinja2](https://github.com/pallets/jinja) template engine (including if and for loops) to render documents.
@@ -54,6 +57,8 @@ FHIR resource narrative:
  * Narrative must contain information about **IsSummary** elements, and extensions marked as **modifierExtension**.
  * Libraries like [HAPI FHIR](https://hapifhir.io/hapi-fhir/) include [narrative generation](https://hapifhir.io/hapi-fhir/docs/model/narrative_generation.html) features based on templates.
 * This use case could leverage complex template features (inheritance, for loops, if, etc.) to build a FHIR resource narrative generation engine.
+
+Look at the [code 📝](src/PyPoc/UnitTest/narrative.cls)
 
 ```
 <div>
