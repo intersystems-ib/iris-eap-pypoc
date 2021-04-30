@@ -29,7 +29,7 @@ do ##class(%UnitTest.Manager).RunTest("", "/noload/norecursive/nodelete")
 
 3. Run some specific test:
 ```objectscript
-do ##class(%UnitTest.Manager).RunTest("", "/noload/norecursive/nodelete")
+do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.jsonschema", "/noload/norecursive/nodelete")
 ```
 
 # PyPocs
