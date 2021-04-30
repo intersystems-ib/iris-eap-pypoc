@@ -13,7 +13,7 @@ cd iris-eap-pypoc
 ```
 Load source code into IRIS.
 ```
-sh loader.sh
+do $system.OBJ.LoadDir("/tmp/iris-eap-pypoc/src", "ck")
 ```
 
 # Run
