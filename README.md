@@ -42,7 +42,10 @@ Use cases:
  * Validate JSON data received before processing.
  * Validate JSON data before sending it to a external API.
 
-Look at the [code 📝](src/PyPoc/UnitTest/jsonschema.cls)
+[Try it! 📝](src/PyPoc/UnitTest/jsonschema.cls)
+```objectscript
+do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.jsonschema", "/noload/norecursive/nodelete")
+```
 
 ## FHIR narrative (templates)
 Use a [jinja2](https://github.com/pallets/jinja) template engine (including if and for loops) to render documents.
@@ -58,8 +61,12 @@ FHIR resource narrative:
  * Libraries like [HAPI FHIR](https://hapifhir.io/hapi-fhir/) include [narrative generation](https://hapifhir.io/hapi-fhir/docs/model/narrative_generation.html) features based on templates.
 * This use case could leverage complex template features (inheritance, for loops, if, etc.) to build a FHIR resource narrative generation engine.
 
-Look at the [code 📝](src/PyPoc/UnitTest/narrative.cls)
+[Try it! 📝](src/PyPoc/UnitTest/narrative.cls)
+```
+do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.narrative", "/noload/norecursive/nodelete")
+```
 
+You can use templates like this:
 ```
 <div>
     <h1>{{ resourceType }}</h1>
@@ -80,4 +87,11 @@ Look at the [code 📝](src/PyPoc/UnitTest/narrative.cls)
         {% endfor %}
     </ul>
 </div>
+```
+
+## gRPC
+
+[Try it! 📝](src/PyPoc/UnitTest/grpc.cls)
+```
+do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.grpc", "/noload/norecursive/nodelete")
 ```
