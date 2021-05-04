@@ -19,6 +19,8 @@ Method OnBeforeAllTests() As %Status
     quit ret
 }
 
+/// based on:
+/// gRPC quickstart https://grpc.io/docs/languages/python/quickstart/
 Method TestGreeter() As %Status
 {
     set grpcPath = ..FilePath
