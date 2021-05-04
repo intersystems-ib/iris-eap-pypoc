@@ -5,31 +5,21 @@ Simple Pocs developed during embedded Python Evaluation + IRIS.
 Some Pocs are written in a UnitTest fashion so you can test them easily in each release.
 
 # Setup
-Clone repo
+1. Clone repo
 ```
 cd /tmp
 git clone https://github.com/intersystems-ib/iris-eap-pypoc
 cd iris-eap-pypoc
 ```
-Load source code into IRIS.
+
+2. Load source code into IRIS.
 ```
 do $system.OBJ.LoadDir("/tmp/iris-eap-pypoc/src", "ck")
 ```
 
-# Run
-1. Set `^UnitTest` global to the source directory
+3. Set `^UnitTest` global to the source directory
 ```
 set ^UnitTestRoot = "/tmp/iris-eap-pypoc/src/PyPoc/UnitTest"
-```
-
-2. Run all tests:
-```objectscript
-do ##class(%UnitTest.Manager).RunTest("", "/noload/norecursive/nodelete")
-```
-
-3. Run some specific test:
-```objectscript
-do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.jsonschema", "/noload/norecursive/nodelete")
 ```
 
 # PyPocs
@@ -90,6 +80,15 @@ You can use templates like this:
 ```
 
 ## gRPC
+Use gRPC within an IRIS context.
+
+* gRPC is an open source remote procedure call. It is lightweight and high-performance.
+* It uses HTTP/2 for transport, Protocol Buffers as the interface description language.
+* It generates cross-platform client and server bindings for many languages (Python included). 
+* Most common usage scenarios include connecting services in a microservices style architecture, or connecting mobile device clients to backend services.
+
+Use cases:
+ * Leverage gRPC Python generated code from a protobuffer into IRIS.
 
 [Try it! 📝](src/PyPoc/UnitTest/grpc.cls)
 ```
