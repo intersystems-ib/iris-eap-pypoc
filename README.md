@@ -2,7 +2,10 @@ Python Pocs
 
 Simple Pocs developed during embedded Python Evaluation + IRIS.
 
-Some Pocs are written in a UnitTest fashion so you can test them easily in each release.
+Samples are written in a UnitTest fashion so you can test them easily in each release.
+
+# Requirements
+`IRIS for UNIX (Ubuntu Server LTS for x86-64) 2021.1.0PYTHON (Build 204U) Fri Apr 30 2021 00:24:43 UTC`
 
 # Setup
 1. Clone repo
