@@ -1,7 +1,7 @@
 Class PyPoc.grpc.GreeterServer Extends %RegisteredObject
 {
 
-Method PyServer() [ Language = python ]
+Method PyServer(port As %String) [ Language = python ]
 {
     from concurrent import futures
     
@@ -19,7 +19,6 @@ Method PyServer() [ Language = python ]
     def serve():
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(self), server)
-        port = 50052
         server.add_insecure_port('[::]:{}'.format(port))
         server.start()
         print('Started server at {}'.format(port))
@@ -44,12 +43,12 @@ Method SomeFancyGreeting(name As %String) As %String
 }
 
 /// do ##class(PyPoc.grpc.GreeterServer).Run()
-ClassMethod Run()
+ClassMethod Run(port As %Integer = 50052)
 {
     set obj = ..%New()
     try {
         write !,"Job: ",$job,! 
-        do obj.PyServer()
+        do obj.PyServer(port)
     } catch ex {
         do ex.DisplayString()
     }

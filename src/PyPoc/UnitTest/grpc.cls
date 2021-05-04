@@ -28,10 +28,11 @@ Method TestGreeter() As %Status
     set helper = ##class(PyPoc.grpc.Helper).%New()
     do helper.PyBuildPackageProtos(grpcPath, outputPath)
 
+    set port = 50053
     do $$$LogMessage("creating gRPC server...")
-    job ##class(PyPoc.grpc.GreeterServer).Run()
+    job ##class(PyPoc.grpc.GreeterServer).Run(port)
     set serverJob = $ZCHILD
-    do $$$LogMessage("gRPC server running on job "_$ZCHILD)
+    do $$$LogMessage("gRPC server running. job="_$ZCHILD_ " port="_port)
 
     set hangTime=.5
     do $$$LogMessage("hanging for "_hangTime_" seconds...")
@@ -41,7 +42,7 @@ Method TestGreeter() As %Status
     for i=1:1:3 {
         set clientName = "client"_i
         do $$$LogMessage("calling gRPC clientName="_clientName)
-        set received = ##class(PyPoc.grpc.GreeterClient).Run("client"_i)
+        set received = ##class(PyPoc.grpc.GreeterClient).Run("client"_i, port)
         set expected = "Received: Hi "_clientName_"!"
         do $$$AssertEquals(received, expected, "gRPC client receives: "_expected)
     }
