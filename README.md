@@ -97,3 +97,15 @@ Use cases:
 ```
 do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.grpc", "/noload/norecursive/nodelete")
 ```
+
+## mocking
+Use python mocking and unittest framework.
+
+Use cases:
+* Take adventage of Python mocking framework: mock object methods and properties, include side effects, etc.
+* Create more complex & powerful unitests using mocks and Python unitests.
+
+```
+do ##class(PyPoc.UnitTest.mocking).PyTestSimple()
+do ##class(PyPoc.UnitTest.mocking).PyTestRestData()
+```
