@@ -43,16 +43,35 @@ Method SomeFancyGreeting(name As %String) As %String
     quit "Hi "_name_"!"
 }
 
+/// do ##class(PyPoc.grpc.GreeterServer).Run()
 ClassMethod Run()
 {
     set obj = ..%New()
-    set oldstate = $system.Python.ChangeSignalState(0)
-    try { 
+    try {
+        write !,"Job: ",$job,! 
         do obj.PyServer()
     } catch ex {
         do ex.DisplayString()
     }
-    do $system.Python.ChangeSignalState(oldstate)
+}
+
+ClassMethod Terminate(jobNum As %String, Output returnVal) As %Status
+{
+    set ret = $$$OK
+    try {
+        set returnVal = ""
+        do ..PyTerminate(jobNum)
+        do $system.Process.Terminate(jobNum, .returnVal)
+    } catch ex {
+        set ret = ex.AsStatus()
+    }
+    quit ret
+}
+
+ClassMethod PyTerminate(pid As %String) [ Language = python ]
+{
+    import os, signal
+    os.kill(pid, signal.SIGINT)
 }
 
 }

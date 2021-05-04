@@ -33,7 +33,7 @@ Method TestGreeter() As %Status
     set serverJob = $ZCHILD
     do $$$LogMessage("gRPC server running on job "_$ZCHILD)
 
-    set hangTime=2
+    set hangTime=.5
     do $$$LogMessage("hanging for "_hangTime_" seconds...")
     hang hangTime
     do $$$LogMessage("done")
@@ -46,8 +46,8 @@ Method TestGreeter() As %Status
         do $$$AssertEquals(received, expected, "gRPC client receives: "_expected)
     }
 
-    do $$$LogMessage("terminating gRPC job...")
-    do $$$AssertEquals($system.Process.Terminate(serverJob), 1)
+    do $$$LogMessage("terminating gRPC server...")
+    do $$$AssertStatusOK(##class(PyPoc.grpc.GreeterServer).Terminate(serverJob, .returnVal))
 }
 
 }
