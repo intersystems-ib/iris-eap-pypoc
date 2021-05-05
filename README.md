@@ -103,9 +103,34 @@ Use python mocking and unittest framework.
 Mock objects are simulated objects that mimic the behaviour of real objects in controlled ways.
 
 Use cases:
-* Take adventage of Python mocking framework: mock object methods and properties, include side effects, etc.
-* Create more complex & powerful unitests using mocks and Python unitests.
+* Take advantage of Python mocking framework: mock object methods and properties, include side effects, etc.
+* Allow developers to create more complex & powerful unitests using mocked objects and Python unitest framework.
 
+[Try it! 📝](src/PyPoc/UnitTest/mocking.cls)
 ```
 do ##class(PyPoc.UnitTest.mocking).PyTestGreeter()
+```
+
+You can mock IRIS Objectscript defined objects using Python mock object library. 
+
+```python
+   class TestGreeter(unittest.TestCase):
+        """UnitTest for PyPoc.mocking.Greeter"""
+
+        def setUp(self):
+            """Setup test (instantiate objects)"""
+
+            self.greeter = iris.cls("PyPoc.mocking.Greeter")._New()
+
+            # create a mock TimeService that will be used by Greeter
+            self.timeService = iris.cls("PyPoc.mocking.TimeService")._New()
+            self.timeService = Mock(spec=['IsMorning', 'IsAfternoon', 'IsEvening'])
+            self.greeter.timeService = self.timeService 
+            
+        def test_good_morning(self):
+            """Mocked TimeService: IsMorning()=1"""
+
+            self.timeService.IsMorning.return_value = 1
+            self.assertEquals(self.greeter.GetSomeGreet("foo"), "Good morning foo!, have a nice day")
+            self.assertEquals(self.timeService.IsMorning.call_count, 1, "Is Morning call count")
 ```
