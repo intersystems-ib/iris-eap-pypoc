@@ -1,68 +1,32 @@
 Class PyPoc.UnitTest.mocking Extends %RegisteredObject
 {
 
-/// do ##class(PyPoc.UnitTest.mocking).PyTestSimple()
-ClassMethod PyTestSimple() [ Language = python ]
+/// do ##class(PyPoc.UnitTest.mocking).PyTestGreeter()
+ClassMethod PyTestGreeter() [ Language = python ]
 {
     import iris, sys, unittest
     from unittest.mock import Mock, PropertyMock
 
-    class TestSimple(unittest.TestCase):
-        def test_populate_utils(self):
+    class TestGreeter(unittest.TestCase):
+        
+        def setUp(self):
+            self.greeter = iris.cls("PyPoc.mocking.Greeter")._New()
+            self.timeService = iris.cls("PyPoc.mocking.TimeService")._New()
+            self.timeService = Mock(spec=['IsMorning', 'IsAfternoon', 'IsEvening'])
+            self.greeter.timeService = self.timeService 
             
-            # let's say we need to mock %Library.PopulateUtils behaviour
-            popUtils = iris.cls("%Library.PopulateUtils")
-            popUtils = Mock()
-            popUtils.Name.return_value = "Mocked Name"
-            
-            someName = popUtils.Name()
-            popUtils.Name.assert_called()
-            self.assertEquals(someName, "Mocked Name")
-            
+        def test_good_morning(self):
+            self.timeService.IsMorning.return_value = 1
+            self.assertEquals(self.greeter.GetSomeGreet("foo"), "Good morning foo!, have a nice day")
+            self.assertEquals(self.timeService.IsMorning.call_count, 1, "Is Morning call count")
 
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestSimple)
-    unittest.TextTestRunner(verbosity=1,stream=sys.stdout).run(suite)
-}
+        def test_afternoon(self):
+            self.timeService.IsMorning.return_value = 0
+            self.timeService.IsAfternoon.return_value = 1
+            self.assertEquals(self.greeter.GetSomeGreet("foo"), "Good afternoon foo")
 
-/// do ##class(PyPoc.UnitTest.mocking).PyTestRestData()
-ClassMethod PyTestRestData() [ Language = python ]
-{
-    import sys
-    import requests
-    import unittest
-    from unittest.mock import Mock
 
-    # Mock requests to control its behavior
-    requests = Mock()
-
-    def get_rest_data():
-        r = requests.get('http://localhost/api/restdata')
-        if r.status_code == 200:
-            return r.json()
-        return None
-
-    class TestRestData(unittest.TestCase):
-        def log_request(self, url):
-            # Log a fake request for test output purposes
-            print(f'Making a request to {url}.')
-            print('Request received!')
-
-            # Create a new Mock to imitate a Response
-            response_mock = Mock()
-            response_mock.status_code = 200
-            response_mock.json.return_value = {
-                'Name': 'Some name',
-                'Alias': 'awesome123',
-            }
-            return response_mock
-
-        def test_get_rest_data_logging(self):
-            # Test a successful, logged request
-            requests.get.side_effect = self.log_request
-            assert get_rest_data()['Name'] == 'Some name'
-            
-
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestRestData)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestGreeter)
     unittest.TextTestRunner(verbosity=1,stream=sys.stdout).run(suite)
 }
 

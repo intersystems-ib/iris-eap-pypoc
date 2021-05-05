@@ -100,12 +100,12 @@ do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.grpc", "/noload/norecursi
 
 ## mocking
 Use python mocking and unittest framework.
+Mock objects are simulated objects that mimic the behaviour of real objects in controlled ways.
 
 Use cases:
 * Take adventage of Python mocking framework: mock object methods and properties, include side effects, etc.
 * Create more complex & powerful unitests using mocks and Python unitests.
 
 ```
-do ##class(PyPoc.UnitTest.mocking).PyTestSimple()
-do ##class(PyPoc.UnitTest.mocking).PyTestRestData()
+do ##class(PyPoc.UnitTest.mocking).PyTestGreeter()
 ```
