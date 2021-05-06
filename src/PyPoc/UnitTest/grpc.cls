@@ -45,11 +45,12 @@ Method TestGreeter() As %Status
 
     // run some grpc client calls
     for i=1:1:3 {
-        set clientName = "client"_i
-        do $$$LogMessage("calling gRPC clientName="_clientName)
-        set received = ##class(PyPoc.grpc.GreeterClient).Run("client"_i, port)
-        set expected = "Received: Hi "_clientName_"!"
-        do $$$AssertEquals(received, expected, "gRPC client receives: "_expected)
+        set client = ##class(PyPoc.grpc.GreeterClient).%New("localhost", port)
+        set name = ##class(%PopulateUtils).Name()
+        do client.BuildMessage(name)
+        set received = client.SendMessage()
+        set expected = "Hi "_name_"!"
+        do $$$AssertEquals(received.message, expected, "gRPC client receives: "_received.message)
     }
 
     // terminate grpc server process
