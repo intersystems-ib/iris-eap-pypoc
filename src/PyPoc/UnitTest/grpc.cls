@@ -13,6 +13,13 @@ Method OnBeforeAllTests() As %Status
         set ..FilePath = ##class(%File).NormalizeDirectory("", filePath)
         if ..FilePath="" $$$ThrowStatus($$$ERROR($$$GeneralError, "FilePath is not correct"))
 
+        // build python stubs into <install>/mgr/python directory
+        set grpcPath = ..FilePath
+        set outputPath =  $zu(12)_"python"
+        do $$$LogMessage("building gRPC python stubs from protos in: "_outputPath)
+        set helper = ##class(PyPoc.grpc.Helper).%New()
+        do helper.PyBuildPackageProtos(grpcPath, outputPath)
+
     } catch ex {
         set ret = ex.AsStatus()
     } 
@@ -23,13 +30,6 @@ Method OnBeforeAllTests() As %Status
 /// gRPC quickstart https://grpc.io/docs/languages/python/quickstart/
 Method TestGreeter() As %Status
 {
-    // build python stubs
-    set grpcPath = ..FilePath
-    set outputPath =  $zu(12)_"python"
-    do $$$LogMessage("building gRPC python stubs from protos in: "_outputPath)
-    set helper = ##class(PyPoc.grpc.Helper).%New()
-    do helper.PyBuildPackageProtos(grpcPath, outputPath)
-
     // create grpc server using other process
     set port = 50053
     do $$$LogMessage("creating gRPC server...")
