@@ -98,6 +98,15 @@ Use cases:
 do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.grpc", "/noload/norecursive/nodelete")
 ```
 
+gRPC could be implemented as part of Interoperability framework, have a look at:
+* [Business Operation](src/PyPoc/grpc/Interop/Operation.cls).
+* [Business Service](src/PyPoc/grpc/Interop/Service.cls) using an [Adapter](src/PyPoc/grpc/Interop/Adapter.cls): it works, receives gRPC incoming messages that can be converted to production messages, however it does not stop gracefully at all probably because the server process is blocking. 
+
+In case you want to test the Business Service, you can stop the job using:
+```objectscript
+do ##class(PyPoc.grpc.Interop.Adapter).Terminate(<jobNumber>)
+```
+
 ## mocking
 Use python mocking and unittest framework.
 Mock objects are simulated objects that mimic the behaviour of real objects in controlled ways.
