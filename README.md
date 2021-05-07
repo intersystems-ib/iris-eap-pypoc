@@ -17,6 +17,8 @@ cd iris-eap-pypoc
 
 2. Load source code into IRIS.
 ```
+zn "USER"
+write ##class(%EnsembleMgr).EnableNamespace("USER")
 do $system.OBJ.LoadDir("/tmp/iris-eap-pypoc/src", "ck")
 ```
 
