@@ -58,4 +58,33 @@ Method TestGreeter() As %Status
     do $$$AssertStatusOK(##class(PyPoc.grpc.GreeterServer).Terminate(serverJob, .returnVal))
 }
 
+/// based on:
+/// https://realpython.com/python-microservices-grpc/
+Method TestRecommendation() As %Status
+{
+    // create grpc server using other process
+    set port = 50054
+    do $$$LogMessage("creating gRPC server...")
+    job ##class(PyPoc.grpc.RecommendationServer).Run(port)
+    set serverJob = $ZCHILD
+    do $$$LogMessage("gRPC server running. job="_$ZCHILD_ " port="_port)
+
+    // wait some time
+    set hangTime=.5
+    do $$$LogMessage("hanging for "_hangTime_" seconds...")
+    hang hangTime
+    do $$$LogMessage("done")
+
+    // run some grpc client calls
+    set client = ##class(PyPoc.grpc.RecommendationClient).%New("localhost", port)
+    do client.BuildMessage(22, "", 3)
+    set received = client.SendMessage()
+    set expected = "The Maltese Falcon"
+    do $$$AssertEquals(received.recommendations."__getitem__"(0).title, expected, "gRPC client receives: "_expected)
+
+    // terminate grpc server process
+    do $$$LogMessage("terminating gRPC server...")
+    do $$$AssertStatusOK(##class(PyPoc.grpc.RecommendationServer).Terminate(serverJob, .returnVal))
+}
+
 }

@@ -42,6 +42,35 @@ Use cases:
 do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.jsonschema", "/noload/norecursive/nodelete")
 ```
 
+<details>
+  <summary>👉 Click to view results</summary>
+  
+  ```
+USER>do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.jsonschema", "/noload/norecursive/nodelete")
+
+===============================================================================
+Directory: /tmp/iris-eap-pypoc/src/PyPoc/UnitTest/
+===============================================================================
+  (root) begins ...
+    PyPoc.UnitTest.jsonschema begins ...
+      TestInvalidJSON() begins ...
+        AssertTrue:validationEx.Data["'Invalid' is not of type 'number'" (passed)
+        LogMessage:Duration of execution: .001105 sec.
+      TestInvalidJSON passed
+      TestValidJSON() begins ...
+        AssertSuccess:validation OK (passed)
+        LogMessage:Duration of execution: .000515 sec.
+      TestValidJSON passed
+    PyPoc.UnitTest.jsonschema passed
+  Skipping deleting classes 
+  (root) passed
+
+Use the following URL to view the result:
+http://127.0.1.1:52773/csp/sys/%25UnitTest.Portal.Indices.cls?Index=211&$NAMESPACE=USER
+All PASSED  
+  ```
+</details>
+
 ## FHIR narrative (templates)
 Use a [jinja2](https://github.com/pallets/jinja) template engine (including if and for loops) to render documents.
 
@@ -60,6 +89,37 @@ FHIR resource narrative:
 ```
 do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.narrative", "/noload/norecursive/nodelete")
 ```
+
+<details>
+  <summary>👉 Click to view results</summary>
+  
+  ```
+USER>do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.narrative", "/noload/norecursive/nodelete")
+
+===============================================================================
+Directory: /tmp/iris-eap-pypoc/src/PyPoc/UnitTest/
+===============================================================================
+  (root) begins ...
+    PyPoc.UnitTest.narrative begins ...
+      TestFHIRNarrative() begins ...
+        AssertFilesSame:'/tmp/iris-eap-pypoc/files/narrative/output.html'=='/tmp/iris-eap-pypoc/files/narrative/expected.html' (passed)
+        LogMessage:Duration of execution: .009514 sec.
+      TestFHIRNarrative passed
+      TestSimpleTemplate() begins ...
+        AssertEquals:output== "Very Simple template with some data like: foo or 123" (passed)
+        LogMessage:Duration of execution: .000976 sec.
+      TestSimpleTemplate passed
+    PyPoc.UnitTest.narrative passed
+  Skipping deleting classes 
+  (root) passed
+
+Use the following URL to view the result:
+http://127.0.1.1:52773/csp/sys/%25UnitTest.Portal.Indices.cls?Index=210&$NAMESPACE=USER
+All PASSED  
+  ```
+</details>
+
+<br>
 
 You can use templates like this:
 ```
@@ -99,6 +159,51 @@ Use cases:
 ```
 do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.grpc", "/noload/norecursive/nodelete")
 ```
+
+<details>
+  <summary>👉 Click to view results</summary>
+  
+  ```
+  USER>do ##class(%UnitTest.Manager).RunTest(":PyPoc.UnitTest.grpc", "/noload/norecursive/nodelete")
+
+===============================================================================
+Directory: /tmp/iris-eap-pypoc/src/PyPoc/UnitTest/
+===============================================================================
+  (root) begins ...
+    PyPoc.UnitTest.grpc begins ...
+      TestGreeter() begins ...
+        LogMessage:creating gRPC server...
+        LogMessage:gRPC server running. job=173181 port=50053
+        LogMessage:hanging for .5 seconds...
+        LogMessage:done
+        AssertEquals:gRPC client receives: Hi Yoders,Christine Q.! (passed)
+        AssertEquals:gRPC client receives: Hi Nagel,Susan V.! (passed)
+        AssertEquals:gRPC client receives: Hi Campos,Alice J.! (passed)
+        LogMessage:terminating gRPC server...
+        AssertStatusOK:##class(PyPoc.grpc.GreeterServer).Terminate(serverJob, .returnVal) (passed)
+        LogMessage:Duration of execution: .563179 sec.
+      TestGreeter passed
+      TestRecommendation() begins ...
+        LogMessage:creating gRPC server...
+        LogMessage:gRPC server running. job=173188 port=50054
+        LogMessage:hanging for .5 seconds...
+        LogMessage:done
+        AssertEquals:gRPC client receives: The Maltese Falcon (passed)
+        LogMessage:terminating gRPC server...
+        AssertStatusOK:##class(PyPoc.grpc.RecommendationServer).Terminate(serverJob, .returnVal) (passed)
+        LogMessage:Duration of execution: .524117 sec.
+      TestRecommendation passed
+    PyPoc.UnitTest.grpc passed
+  Skipping deleting classes 
+  (root) passed
+
+Use the following URL to view the result:
+http://127.0.1.1:52773/csp/sys/%25UnitTest.Portal.Indices.cls?Index=209&$NAMESPACE=USER
+All PASSED
+  ```
+</details>
+
+<br>
 
 gRPC could be implemented as part of Interoperability framework, have a look at:
 * [Business Operation](src/PyPoc/grpc/Interop/Operation.cls).
